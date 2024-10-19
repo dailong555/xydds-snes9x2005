@@ -288,6 +288,19 @@ else ifeq ($(platform), miyoo)
 	FLAGS += -fomit-frame-pointer -ffast-math -march=armv5te -mtune=arm926ej-s
 	FLAGS += -DFAST_ALIGNED_LSB_WORD_ACCESS -fno-unroll-loops
 
+# XYDDS
+else ifeq ($(platform), xydds)
+	TARGET := $(TARGET_NAME)_libretro.so
+	CC = /opt/xydds/usr/bin/arm-linux-gcc
+   	CXX = /opt/xydds/usr/bin/arm-linux-g++
+   	AR = /opt/xydds/usr/bin/arm-linux-ar
+	fpic := -fPIC -nostdlib
+	SHARED := -shared -Wl,--version-script=link.T
+	LIBM :=
+	FLAGS += -fomit-frame-pointer -ffast-math -marm -mfpu=neon-vfpv4 -mfloat-abi=hard
+	FLAGS += -DFAST_ALIGNED_LSB_WORD_ACCESS -fno-unroll-loops
+	FLAGS += -DARM -mcpu=cortex-a7
+
 # (armv7 a7, hard point, neon based) ### 
 # NESC, SNESC, C64 mini 
 else ifeq ($(platform), classic_armv7_a7)
